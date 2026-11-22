@@ -21,6 +21,7 @@ from app.services.metric_aggr import MetricAggrService
 from app.services.backfill_run import BackfillRunService
 from app.services.alert_rule import AlertRuleService
 from app.services.data_diff import DataDiffService
+from app.services.diff_sample import DiffSampleService
 from app.services.task_schedule import TaskScheduleService
 from app.services.stream_audit import StreamAuditService
 from app.services.stream_health import StreamHealthService
@@ -45,6 +46,7 @@ SERVICES: dict[str, BaseModuleService] = {
     "backfill_run": BackfillRunService(),
     "alert_rule": AlertRuleService(),
     "data_diff": DataDiffService(),
+    "diff_sample": DiffSampleService(),
     "task_schedule": TaskScheduleService(),
     "stream_audit": StreamAuditService(),
     "stream_health": StreamHealthService(),

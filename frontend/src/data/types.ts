@@ -18,6 +18,8 @@ export type ModuleMeta = {
   actions: string[]
   actionTargets: Record<string, string>
   metrics: string[]
+  /** 只能走专用领域入口（如批次导入）的模块，隐藏通用单条登记按钮。 */
+  hideCreate?: boolean
 }
 
 export type PageResult = {

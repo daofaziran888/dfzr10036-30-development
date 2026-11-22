@@ -59,3 +59,61 @@ export async function loadOverview(): Promise<OverviewResult> {
   if (!response.ok) throw new Error('运营概览读取失败')
   return await response.json()
 }
+
+// ---- 差异样本回填数据集专用入口 ----
+
+export type DiffSampleInput = {
+  主键名?: string
+  主键值: string
+  样本值: string
+  日志位点?: string
+}
+
+export type ImportBatchInput = {
+  batch_no: string
+  source_snapshot: string
+  log_start: string
+  log_end: string
+  target_table?: string
+  idempotency_key?: string
+  content_type?: string
+  samples?: DiffSampleInput[]
+  content?: string
+}
+
+async function postJson(path: string, body: Record<string, unknown>): Promise<ActionResult> {
+  const response = await request(path, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
+  return await response.json()
+}
+
+export function importDiffSamples(payload: ImportBatchInput): Promise<ActionResult> {
+  return postJson('/api/diff-sample/imports', payload as unknown as Record<string, unknown>)
+}
+
+export function submitDiffCorrection(payload: {
+  key_value: string
+  corrected_value: string
+  position: string
+  source_snapshot?: string
+}): Promise<ActionResult> {
+  return postJson('/api/diff-sample/corrections', payload)
+}
+
+export function dispatchDiffBatch(batchNo: string): Promise<ActionResult> {
+  return postJson(`/api/diff-sample/batches/${encodeURIComponent(batchNo)}/dispatch`, {})
+}
+
+export async function fetchDiffResume(): Promise<ActionResult> {
+  const response = await request('/api/diff-sample/resume')
+  if (!response.ok) throw new Error('断点恢复视图读取失败')
+  return await response.json()
+}
+
+export async function fetchDiffQuarantine(): Promise<ActionResult> {
+  const response = await request('/api/diff-sample/quarantine')
+  if (!response.ok) throw new Error('隔离区读取失败')
+  return await response.json()
+}

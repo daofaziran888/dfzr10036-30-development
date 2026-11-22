@@ -338,4 +338,15 @@ SEED_ROWS: dict[str, list[dict[str, Any]]] = {
             "合规标记": "合规",
         },
     ],
+    # 差异样本回填数据集：默认留空，由导入接口写入；这里只预置事件流里的更正记录。
+    "diff_sample": [],
+    "diff_sample_batch": [],
+    "diff_event_log": [
+        {
+            "id": 1, "status": "已记录", "pending": False, "abnormal": False,
+            "事件类型": "CORRECTION", "主键值": "order-7788",
+            "更正值": "120.00", "日志位点": "binlog.001235:402100",
+            "源快照": "snapshot-external-recon-20261122",
+        },
+    ],
 }

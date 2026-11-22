@@ -212,6 +212,18 @@ export const MODULES: ModuleMeta[] = [
     metrics: ["任务总数", "一致任务", "存在差异任务"],
   },
   {
+    key: "diff_sample",
+    name: "差异样本回填",
+    entity: "差异样本",
+    desc: "导入附快照来源的外部差异样本，按主键与日志位点绑定成差异键回填数据集，冲突键隔离待更正核实后再派发原位点补数。",
+    fields: ["批次编号", "源快照", "主键名", "主键值", "样本值", "日志位点", "源日志起始", "源日志截止", "隔离原因", "更正位点"],
+    statuses: ["已接纳", "已隔离", "已核实", "已派发"],
+    actions: [],
+    actionTargets: {},
+    metrics: ["样本总数", "隔离样本", "已派发样本"],
+    hideCreate: true,
+  },
+  {
     key: "task_schedule",
     name: "编排调度",
     entity: "调度计划",
